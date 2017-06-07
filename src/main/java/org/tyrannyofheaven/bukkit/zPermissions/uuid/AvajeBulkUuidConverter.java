@@ -29,6 +29,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 
 import org.bukkit.plugin.Plugin;
+import org.tyrannyofheaven.bukkit.util.IDBPlugin;
 import org.tyrannyofheaven.bukkit.util.uuid.UuidDisplayName;
 import org.tyrannyofheaven.bukkit.util.uuid.UuidResolver;
 import org.tyrannyofheaven.bukkit.zPermissions.model.Membership;
@@ -44,7 +45,7 @@ public class AvajeBulkUuidConverter implements BulkUuidConverter {
 
     private final UuidResolver uuidResolver;
 
-    public AvajeBulkUuidConverter(Plugin plugin, UuidResolver uuidResolver) {
+    public AvajeBulkUuidConverter(IDBPlugin plugin, UuidResolver uuidResolver) {
         this.plugin = plugin;
         this.ebeanServer = plugin.getDatabase();
         this.uuidResolver = uuidResolver;

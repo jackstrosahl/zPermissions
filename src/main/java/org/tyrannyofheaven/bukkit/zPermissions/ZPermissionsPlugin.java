@@ -55,7 +55,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.ServicePriority;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.tyrannyofheaven.bukkit.util.DBPlugin;
 import org.tyrannyofheaven.bukkit.util.ToHDatabaseUtils;
 import org.tyrannyofheaven.bukkit.util.ToHFileUtils;
 import org.tyrannyofheaven.bukkit.util.ToHNamingConvention;
@@ -118,7 +118,7 @@ import com.avaje.ebeaninternal.api.SpiEbeanServer;
  * 
  * @author zerothangel
  */
-public class ZPermissionsPlugin extends JavaPlugin implements ZPermissionsCore, ZPermissionsConfig, CommandExceptionHandler {
+public class ZPermissionsPlugin extends DBPlugin implements ZPermissionsCore, ZPermissionsConfig, CommandExceptionHandler {
 
     // Name of the default group, in absence of a config file
     private static final String DEFAULT_GROUP = "default";

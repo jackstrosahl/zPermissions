@@ -8,6 +8,10 @@ database-read-only: |
   for this server should also be granted read-only permissions on
   zPermissions tables. (Not strictly required though.)
 
+database: |
+  Settings for database (if enabled). This used to be in bukkit.yml before
+  Minecraft 1.12.
+
 group-permission: |
   Groups may have a group permission node automatically assigned to their
   members. This is the name of that permission node. It must be a string

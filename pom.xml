@@ -29,12 +29,17 @@
     </repository>
     <repository>
       <id>vault-repo</id>
-      <url>http://nexus.theyeticave.net/content/repositories/pub_releases/</url>
+      <url>http://nexus.hc.to/content/repositories/pub_releases/</url>
     </repository>
     <repository>
       <id>Tabinol.me Artifactory</id>
       <name>Tabinol.me Artifactory-releases</name>
       <url>http://artifactory.tabinol.me/artifactory/public</url>
+    </repository>
+    <repository>
+      <id>local-repo</id>
+      <name>Local Repo</name>
+      <url>file:${basedir}/repo</url>
     </repository>
   </repositories>
   <dependencies>
@@ -90,25 +95,25 @@
       <artifactId>Residence</artifactId>
       <version>2.6.6.4</version>
     </dependency>
-	<dependency>
-	  <groupId>com.massivecraft</groupId>
-	  <artifactId>Factions</artifactId>
-	  <version>2.4.0</version>
-	</dependency>
-	<dependency><!-- Required by Factions -->
-	  <groupId>com.massivecraft</groupId>
-	  <artifactId>mcore</artifactId>
-	  <version>7.2.1</version>
-	</dependency>
+    <dependency>
+      <groupId>com.massivecraft</groupId>
+      <artifactId>Factions</artifactId>
+      <version>2.4.0</version>
+    </dependency>
+    <dependency><!-- Required by Factions -->
+      <groupId>com.massivecraft</groupId>
+      <artifactId>mcore</artifactId>
+      <version>7.2.1</version>
+    </dependency>
     <dependency>
       <groupId>me.tabinol.factoid</groupId>
       <artifactId>Factoid</artifactId>
       <version>0.3</version>
-	</dependency>
+    </dependency>
     <dependency>
       <groupId>net.milkbowl.vault</groupId>
       <artifactId>VaultAPI</artifactId>
-      <version>1.4</version>
+      <version>1.6</version>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
@@ -121,6 +126,16 @@
       <artifactId>junit</artifactId>
       <version>4.9</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.avaje</groupId>
+      <artifactId>ebean</artifactId>
+      <version>2.8.1</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.persistence</groupId>
+      <artifactId>persistence-api</artifactId>
+      <version>1.0</version>
     </dependency>
   </dependencies>
   <build>
@@ -144,23 +159,23 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-	<version>2.3.2</version>
+        <version>2.3.2</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-	<version>2.3.2</version>
+        <version>2.3.2</version>
         <configuration>
           <archive>
-	    <manifest>
-	      <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-	    </manifest>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
             <manifestEntries>
-	      <Implementation-Build>${buildNumber}</Implementation-Build>
+              <Implementation-Build>${buildNumber}</Implementation-Build>
               <Class-Path>lib/ToHPluginUtils.jar ${project.artifactId}/ToHPluginUtils.jar ../lib/ToHPluginUtils.jar ../ToHPluginUtils.jar</Class-Path>
             </manifestEntries>
           </archive>
@@ -224,68 +239,68 @@
     <profile>
       <id>standalone</id>
       <build>
-	<plugins>
-	  <plugin>
-	    <groupId>org.apache.maven.plugins</groupId>
-	    <artifactId>maven-shade-plugin</artifactId>
-	    <version>1.5</version>
-	    <executions>
-	      <execution>
-		<phase>package</phase>
-		<goals>
-		  <goal>shade</goal>
-		</goals>
-		<configuration>
-		  <artifactSet>
-		    <includes>
-		      <include>org.tyrannyofheaven.bukkit:ToHPluginUtils</include>
-		    </includes>
-		  </artifactSet>
-		  <relocations>
-		    <relocation>
-		      <pattern>org.tyrannyofheaven.bukkit.util</pattern>
-		      <shadedPattern>org.tyrannyofheaven.bukkit.zPermissions.util</shadedPattern>
-		    </relocation>
-		  </relocations>
-		</configuration>
-	      </execution>
-	    </executions>
-	  </plugin>
-	  <!--
-	  <plugin>
-	    <groupId>com.github.wvengen</groupId>
-	    <artifactId>proguard-maven-plugin</artifactId>
-	    <version>2.0.5</version>
-	    <executions>
-	      <execution>
-		<phase>package</phase>
-		<goals>
-		  <goal>proguard</goal>
-		</goals>
-	      </execution>
-	    </executions>
-	    <configuration>
-	      <options>
-		<option>-dontobfuscate</option>
-		<option>-keepattributes SourceFile,LineNumberTable</option>
-		<option>-keepattributes Signature,*Annotation*</option>
-		<option>-keep @javax.persistence.Entity class * { *; }</option>
-		<option>-keepclassmembers class * { @org.tyrannyofheaven.bukkit.util.command.Command *; }</option>
-		<option>-keep public class * extends org.bukkit.plugin.java.JavaPlugin</option>
-	      </options>
-	      <libs>
-		<lib>${java.home}/../Classes/classes.jar</lib>
-	      </libs>
-	      <exclusions>
-		<exclusion>
-		  <groupId>org.tyrannyofheaven.bukkit</groupId>
-		  <artifactId>ToHPluginUtils</artifactId>
-		</exclusion>
-	      </exclusions>
-	    </configuration>
-	  </plugin>
-	  -->
-	</plugins>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>1.5</version>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>shade</goal>
+                </goals>
+                <configuration>
+                  <artifactSet>
+                    <includes>
+                      <include>org.tyrannyofheaven.bukkit:ToHPluginUtils</include>
+                    </includes>
+                  </artifactSet>
+                  <relocations>
+                    <relocation>
+                      <pattern>org.tyrannyofheaven.bukkit.util</pattern>
+                      <shadedPattern>org.tyrannyofheaven.bukkit.zPermissions.util</shadedPattern>
+                    </relocation>
+                  </relocations>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <!--
+          <plugin>
+            <groupId>com.github.wvengen</groupId>
+            <artifactId>proguard-maven-plugin</artifactId>
+            <version>2.0.5</version>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>proguard</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <options>
+                <option>-dontobfuscate</option>
+                <option>-keepattributes SourceFile,LineNumberTable</option>
+                <option>-keepattributes Signature,*Annotation*</option>
+                <option>-keep @javax.persistence.Entity class * { *; }</option>
+                <option>-keepclassmembers class * { @org.tyrannyofheaven.bukkit.util.command.Command *; }</option>
+                <option>-keep public class * extends org.bukkit.plugin.java.JavaPlugin</option>
+              </options>
+              <libs>
+                <lib>${java.home}/../Classes/classes.jar</lib>
+              </libs>
+              <exclusions>
+                <exclusion>
+                  <groupId>org.tyrannyofheaven.bukkit</groupId>
+                  <artifactId>ToHPluginUtils</artifactId>
+                </exclusion>
+              </exclusions>
+            </configuration>
+          </plugin>
+          -->
+        </plugins>
       </build>
     </profile>
   </profiles>

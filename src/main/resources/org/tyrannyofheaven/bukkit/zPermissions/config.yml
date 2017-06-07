@@ -4,6 +4,14 @@ database-support: true
 
 database-read-only: false
 
+database:
+  username: us3r
+  isolation: SERIALIZABLE
+  driver: org.sqlite.JDBC
+  password: passw0rd
+  url: jdbc:sqlite:plugins/zPermissions/zPermissions.db
+  
+
 region-support: true
 
 group-permission: 'group.%s'
