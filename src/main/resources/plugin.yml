@@ -5,6 +5,7 @@ description: Superperms implementation with Bukkit database backend
 author: ZerothAngel
 database: false
 load: STARTUP
+api-version: 1.13
 
 commands:
   permissions:
