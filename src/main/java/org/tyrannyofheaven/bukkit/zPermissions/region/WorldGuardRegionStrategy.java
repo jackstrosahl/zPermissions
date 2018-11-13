@@ -32,12 +32,10 @@ import org.tyrannyofheaven.bukkit.util.ToHLoggingUtils;
 import org.tyrannyofheaven.bukkit.zPermissions.ZPermissionsCore;
 
 import com.google.common.collect.Iterables;
-import com.sk89q.worldedit.BlockVector;
-import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 /**
@@ -92,23 +90,20 @@ public class WorldGuardRegionStrategy implements RegionStrategy, Listener {
     @Override
     public Set<String> getRegions(Location location, Player player) {
         if (isEnabled()) {
-        	
-            RegionManager rm = WorldGuard.getInstance().getPlatform().getRegionContainer().get(new BukkitWorld(location.getWorld()));
-            if (rm != null) {
-                ApplicableRegionSet ars = rm.getApplicableRegions(BlockVector.toBlockPoint(location.getX(), location.getY(), location.getZ()));
-                // Note, sorted from high to low priority, i.e. reverse application order
-                List<ProtectedRegion> sorted = new ArrayList<>();
-                Iterables.addAll(sorted, ars);
-                Collections.reverse(sorted); // Now it is in application order
+            ApplicableRegionSet ars = WorldGuard.getInstance().getPlatform().getRegionContainer()
+            		.createQuery().getApplicableRegions(BukkitAdapter.adapt(location));
+            // Note, sorted from high to low priority, i.e. reverse application order
+            List<ProtectedRegion> sorted = new ArrayList<>();
+            Iterables.addAll(sorted, ars);
+            Collections.reverse(sorted); // Now it is in application order
 
-                Set<String> result = new LinkedHashSet<>(); // Preserve ordering for resolver
-                for (ProtectedRegion pr : sorted) {
-                    // Ignore global region
-                    if (!"__global__".equals(pr.getId())) // NB: Hardcoded and not available as constant in WorldGuard
-                        result.add(pr.getId().toLowerCase());
-                }
-                return result;
+            Set<String> result = new LinkedHashSet<>(); // Preserve ordering for resolver
+            for (ProtectedRegion pr : sorted) {
+                // Ignore global region
+                if (!"__global__".equals(pr.getId())) // NB: Hardcoded and not available as constant in WorldGuard
+                    result.add(pr.getId().toLowerCase());
             }
+            return result;
         }
         return Collections.emptySet();
     }
