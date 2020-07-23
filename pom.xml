@@ -20,8 +20,12 @@
 
   <repositories>
     <repository>
-      <id>tyrannyofheaven.org</id>
-      <url>http://maven.tyrannyofheaven.org</url>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+    <repository>
+      <id>spigot-repo</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
     <repository>
       <id>sk89q-maven</id>
@@ -32,11 +36,6 @@
       <url>http://nexus.hc.to/content/repositories/pub_releases/</url>
     </repository>
     <repository>
-      <id>Tabinol.me Artifactory</id>
-      <name>Tabinol.me Artifactory-releases</name>
-      <url>http://artifactory.tabinol.me/artifactory/public</url>
-    </repository>
-    <repository>
       <id>local-repo</id>
       <name>Local Repo</name>
       <url>file:${basedir}/repo</url>
@@ -44,9 +43,9 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>org.tyrannyofheaven.bukkit</groupId>
+      <groupId>com.github.ezeiger92</groupId>
       <artifactId>ToHPluginUtils</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>master-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.sk89q.worldedit</groupId>
@@ -153,6 +152,17 @@
       <artifactId>persistence-api</artifactId>
       <version>1.0</version>
     </dependency>
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.16.1-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <build>
     <resources>
@@ -226,7 +236,6 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>buildnumber-maven-plugin</artifactId>
-            <version>1.0</version>
             <executions>
               <execution>
                 <phase>validate</phase>
@@ -269,7 +278,7 @@
                 <configuration>
                   <artifactSet>
                     <includes>
-                      <include>org.tyrannyofheaven.bukkit:ToHPluginUtils</include>
+                      <include>com.github.ezeiger92:ToHPluginUtils</include>
                     </includes>
                   </artifactSet>
                   <relocations>

@@ -2,3 +2,7 @@
 /.project
 /.settings
 /target
+/.idea/
+*.db
+*.sql
+*.iml
